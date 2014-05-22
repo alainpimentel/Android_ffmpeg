@@ -106,22 +106,12 @@ public class MainActivity extends Activity {
          
         // Add Drawer Item to dataList
         dataList.add(new DrawerItem("Convert Videos"));
-        dataList.add(new DrawerItem("Message", R.drawable.ic_action_email));
-        dataList.add(new DrawerItem("Likes", R.drawable.ic_action_good));
-        dataList.add(new DrawerItem("Games", R.drawable.ic_action_gamepad));
-        dataList.add(new DrawerItem("Lables", R.drawable.ic_action_labels));
-        dataList.add(new DrawerItem("Search", R.drawable.ic_action_search));
-        dataList.add(new DrawerItem("Cloud", R.drawable.ic_action_cloud));
-        dataList.add(new DrawerItem("Camara", R.drawable.ic_action_camera));
-        dataList.add(new DrawerItem("Video", R.drawable.ic_action_video));
-        dataList.add(new DrawerItem("Groups", R.drawable.ic_action_group));
-        dataList.add(new DrawerItem("Import & Export",
-                    R.drawable.ic_action_import_export));
-        dataList.add(new DrawerItem("Other Option"));
+        dataList.add(new DrawerItem("Browse", R.drawable.ic_action_import_export));
+        dataList.add(new DrawerItem("Output", R.drawable.ic_action_video));
+        dataList.add(new DrawerItem("Processing", R.drawable.ic_action_good));
+        dataList.add(new DrawerItem("Other Options"));
         dataList.add(new DrawerItem("About", R.drawable.ic_action_about));
-        dataList.add(new DrawerItem("Settings", R.drawable.ic_action_settings));
-        dataList.add(new DrawerItem("Help", R.drawable.ic_action_help));
-        //
+        
         adapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item,
                 dataList);
 
@@ -191,14 +181,7 @@ public class MainActivity extends Activity {
                           .getItemName());
               args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
-              break;
-        case 4:
-              fragment = new FragmentOne();
-              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
+              break;        
         case 5:
               fragment = new FragmentTwo();
               args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
@@ -206,62 +189,7 @@ public class MainActivity extends Activity {
               args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
-        case 6:
-              fragment = new FragmentThree();
-              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 7:
-              fragment = new FragmentOne();
-              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 8:
-              fragment = new FragmentTwo();
-              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 9:
-              fragment = new FragmentThree();
-              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 10:
-              fragment = new FragmentOne();
-              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 12:
-              fragment = new FragmentTwo();
-              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 13:
-              fragment = new FragmentThree();
-              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 14:
-              fragment = new FragmentOne();
-              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
+        
         default:
               break;
         }
