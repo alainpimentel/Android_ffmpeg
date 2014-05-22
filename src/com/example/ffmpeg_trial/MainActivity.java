@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -104,8 +103,9 @@ public class MainActivity extends Activity {
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
                     GravityCompat.START);
-        
+         
         // Add Drawer Item to dataList
+        dataList.add(new DrawerItem("Convert Videos"));
         dataList.add(new DrawerItem("Message", R.drawable.ic_action_email));
         dataList.add(new DrawerItem("Likes", R.drawable.ic_action_good));
         dataList.add(new DrawerItem("Games", R.drawable.ic_action_gamepad));
@@ -117,6 +117,7 @@ public class MainActivity extends Activity {
         dataList.add(new DrawerItem("Groups", R.drawable.ic_action_group));
         dataList.add(new DrawerItem("Import & Export",
                     R.drawable.ic_action_import_export));
+        dataList.add(new DrawerItem("Other Option"));
         dataList.add(new DrawerItem("About", R.drawable.ic_action_about));
         dataList.add(new DrawerItem("Settings", R.drawable.ic_action_settings));
         dataList.add(new DrawerItem("Help", R.drawable.ic_action_help));
@@ -150,7 +151,11 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
          
         if (savedInstanceState == null) {
-              SelectItem(0);
+	        if (dataList.get(0).getTitle() != null) {
+	            SelectItem(1);
+	        } else {
+	            SelectItem(0);
+	        }
         }
     }
     
@@ -166,91 +171,91 @@ public class MainActivity extends Activity {
         Fragment fragment = null;
         Bundle args = new Bundle();
         switch (possition) {
-        case 0:
+        case 1:
               fragment = new FragmentOne();
               args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
                           .getItemName());
               args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 1:
-              fragment = new FragmentTwo();
-              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 2:
-              fragment = new FragmentThree();
-              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentTwo();
+              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 3:
-              fragment = new FragmentOne();
-              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentThree();
+              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 4:
-              fragment = new FragmentTwo();
-              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentOne();
+              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 5:
-              fragment = new FragmentThree();
-              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentTwo();
+              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 6:
-              fragment = new FragmentOne();
-              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentThree();
+              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 7:
-              fragment = new FragmentTwo();
-              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 8:
-              fragment = new FragmentThree();
-              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
-                          .getItemName());
-              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
-                          .getImgResID());
-              break;
-        case 9:
               fragment = new FragmentOne();
               args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
                           .getItemName());
               args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
-        case 10:
+        case 8:
               fragment = new FragmentTwo();
               args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
                           .getItemName());
               args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
-        case 11:
+        case 9:
               fragment = new FragmentThree();
               args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
                           .getItemName());
               args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
+        case 10:
+              fragment = new FragmentOne();
+              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
+                          .getItemName());
+              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
+                          .getImgResID());
+              break;
         case 12:
+              fragment = new FragmentTwo();
+              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
+                          .getItemName());
+              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
+                          .getImgResID());
+              break;
+        case 13:
+              fragment = new FragmentThree();
+              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
+                          .getItemName());
+              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
+                          .getImgResID());
+              break;
+        case 14:
               fragment = new FragmentOne();
               args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
                           .getItemName());
@@ -308,7 +313,9 @@ public class MainActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 		          long id) {
-		    SelectItem(position);
+		    if (dataList.get(position).getTitle() == null) {
+		          SelectItem(position);
+		    }
 		
 		}
     }

@@ -4,11 +4,17 @@ public class DrawerItem {
 	 
     String ItemName;
     int imgResID;
+    String title;
 
     public DrawerItem(String itemName, int imgResID) {
           super();
           ItemName = itemName;
           this.imgResID = imgResID;
+    }
+    
+    public DrawerItem(String title) {
+        this(null, 0);
+        this.title = title;
     }
 
     public String getItemName() {
@@ -22,6 +28,12 @@ public class DrawerItem {
     }
     public void setImgResID(int imgResID) {
           this.imgResID = imgResID;
+    }
+    public String getTitle() {
+        return title;
+	}
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }
