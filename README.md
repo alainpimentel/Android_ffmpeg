@@ -10,4 +10,8 @@
 ### How do I get set up? ###
 
 * Clone Repository
-* Clone https://github.com/guardianproject/android-ffmpeg-java and add it as a library
+* Clone [guardianproject](https://github.com/guardianproject/android-ffmpeg-java) and add it as a library
+
+### Programming ###
+
+* Tutorial for Navigation Drawer Menu: [link](http://www.tutecentral.com/android-custom-navigation-drawer/)
