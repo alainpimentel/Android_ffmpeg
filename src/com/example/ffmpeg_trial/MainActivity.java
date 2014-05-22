@@ -162,31 +162,31 @@ public class MainActivity extends Activity {
         Bundle args = new Bundle();
         switch (possition) {
         case 1:
-              fragment = new FragmentOne();
-              args.putString(FragmentOne.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentBrowser();
+              args.putString(FragmentBrowser.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentOne.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentBrowser.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 2:
-              fragment = new FragmentTwo();
-              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentOutput();
+              args.putString(FragmentOutput.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentOutput.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         case 3:
-              fragment = new FragmentThree();
-              args.putString(FragmentThree.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentProcessing();
+              args.putString(FragmentProcessing.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentThree.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentProcessing.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;        
         case 5:
-              fragment = new FragmentTwo();
-              args.putString(FragmentTwo.ITEM_NAME, dataList.get(possition)
+              fragment = new FragmentOutput();
+              args.putString(FragmentOutput.ITEM_NAME, dataList.get(possition)
                           .getItemName());
-              args.putInt(FragmentTwo.IMAGE_RESOURCE_ID, dataList.get(possition)
+              args.putInt(FragmentOutput.IMAGE_RESOURCE_ID, dataList.get(possition)
                           .getImgResID());
               break;
         

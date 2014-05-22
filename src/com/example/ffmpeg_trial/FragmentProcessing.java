@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
  
-public class FragmentThree extends Fragment {
+public class FragmentProcessing extends Fragment {
  
       ImageView ivIcon;
       TextView tvItemName;
@@ -16,7 +16,7 @@ public class FragmentThree extends Fragment {
       public static final String IMAGE_RESOURCE_ID = "iconResourceID";
       public static final String ITEM_NAME = "itemName";
  
-      public FragmentThree() {
+      public FragmentProcessing() {
  
       }
  
@@ -24,7 +24,7 @@ public class FragmentThree extends Fragment {
       public View onCreateView(LayoutInflater inflater, ViewGroup container,
                   Bundle savedInstanceState) {
  
-            View view = inflater.inflate(R.layout.fragment_layout_three, container,
+            View view = inflater.inflate(R.layout.fragment_layout_processing, container,
                         false);
  
             ivIcon = (ImageView) view.findViewById(R.id.frag3_icon);

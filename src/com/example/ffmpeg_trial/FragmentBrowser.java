@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
  
-public class FragmentTwo   extends Fragment {
+public class FragmentBrowser extends Fragment {
  
       ImageView ivIcon;
       TextView tvItemName;
@@ -16,8 +16,7 @@ public class FragmentTwo   extends Fragment {
       public static final String IMAGE_RESOURCE_ID = "iconResourceID";
       public static final String ITEM_NAME = "itemName";
  
-      public FragmentTwo()
-      {
+      public FragmentBrowser() {
  
       }
  
@@ -25,10 +24,11 @@ public class FragmentTwo   extends Fragment {
       public View onCreateView(LayoutInflater inflater, ViewGroup container,
                   Bundle savedInstanceState) {
  
-            View view=inflater.inflate(R.layout.fragment_layout_two,container, false);
+            View view = inflater.inflate(R.layout.fragment_layout_browser, container,
+                        false);
  
-            ivIcon=(ImageView)view.findViewById(R.id.frag2_icon);
-            tvItemName=(TextView)view.findViewById(R.id.frag2_text);
+            ivIcon = (ImageView) view.findViewById(R.id.frag1_icon);
+            tvItemName = (TextView) view.findViewById(R.id.frag1_text);
  
             tvItemName.setText(getArguments().getString(ITEM_NAME));
             ivIcon.setImageDrawable(view.getResources().getDrawable(
