@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
@@ -19,6 +20,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 
 	private static final int REQUEST_CHOOSER = 1234;
 	Button browse_button;
+	TextView input_res;
 
 	public FragmentBrowser() {
 
@@ -30,8 +32,9 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 
 		View view = inflater.inflate(R.layout.fragment_layout_browser, container, false);
 
-		browse_button = (Button) view.findViewById(R.id.button1);
+		browse_button = (Button) view.findViewById(R.id.button_select_in);
 		browse_button.setOnClickListener(this);
+		input_res = (TextView) view.findViewById(R.id.input_res);
 		return view;
 	}
 
@@ -56,7 +59,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	                // Get the File path from the Uri
 	                String path = FileUtils.getPath(getActivity(), uri);
 	                Toast.makeText(getActivity(), path, Toast.LENGTH_LONG).show();
-
+	                
+	                input_res.setText(path);
 	                // Alternatively, use FileUtils.getFile(Context, Uri)
 	                if (path != null && FileUtils.isLocal(path)) {
 	                    File file = new File(path);

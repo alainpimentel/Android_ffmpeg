@@ -1,24 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    >
- 
-    <!--
-    **************************IMPORTANT***********************************
-     change this id attribute values as "frag2_icon" and "frag2_text" for
-     fragment_layout_two.xml and "frag3_icon" and "frag3_text" for
-     fragment_layout_three.xml
-    **********************************************************************
-      -->
- 
-   
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="3dp" >
 
-    <Button
-        android:id="@+id/button1"
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/input_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/input_select"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+        <Button
+            android:id="@+id/button_select_in"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select" 
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Browse" />
- 
-</LinearLayout>
+        android:paddingTop="10dp" >
+
+        <TextView
+            android:id="@+id/input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/input"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+        <TextView
+            android:id="@+id/input_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp" >
+
+        <TextView
+            android:id="@+id/output"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/output"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+        <TextView
+            android:id="@+id/output_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/fps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fps"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+        <EditText
+            android:id="@+id/fps_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/width"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/width"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+        <EditText
+            android:id="@+id/width_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/height"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+        <EditText
+            android:id="@+id/height_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:textAppearance="?android:attr/textAppearanceMedium" /> 
+
+    </TableRow>
+
+</TableLayout>

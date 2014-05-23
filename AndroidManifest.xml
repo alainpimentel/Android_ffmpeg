@@ -42,10 +42,6 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.ffmpeg_trial.ActivityaFileChooserLink"
-            android:label="@string/title_activity_activitya_file_chooser_link" >
-        </activity>
     </application>
 
 </manifest>

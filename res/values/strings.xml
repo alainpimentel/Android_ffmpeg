@@ -5,6 +5,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="title_activity_activitya_file_chooser_link">File Browser</string>
+    <string name="select">Select</string>
+    <string name="input_select">Choose input:</string>
+    <string name="input">Input:</string>
+    <string name="output">output:</string>
+    <string name="fps">FPS:</string>
+    <string name="width">Width:</string>
+    <string name="height">Height:</string>
 
 </resources>
