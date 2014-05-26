@@ -134,4 +134,24 @@
 
     </TableRow>
 
+    <TableRow
+        android:id="@+id/tableRow7"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start" 
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    </TableRow>
+
 </TableLayout>
