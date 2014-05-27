@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.resources.ConversionService;
 import com.example.resources.MediaHelper;
-import com.example.resources.VideoHandler;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 
 public class FragmentBrowser extends Fragment implements OnClickListener {
@@ -34,7 +34,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		   off_color = "#BFBFBF",
 		   on_color = "#3FD93F",
 		   error_color = "#F7513E",
-		   ret_mssg = "";
+		   ret_mssg = "",
+		   proccessing = "Processing Video";
 	
 	// Gets results back from Intentservice
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -103,6 +104,13 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		super.onResume();
 		getActivity().registerReceiver(receiver, new IntentFilter(
 				ConversionService.NOTIFICATION));
+		SharedPreferences sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", 
+				Context.MODE_PRIVATE);
+		if (sharedpreferences.contains("mssg"))
+	      {
+			ret_mssg = sharedpreferences.getString("mssg", "");
+			updateViews(ret_mssg);
+	      }
 	}
 
 	@Override
@@ -155,7 +163,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					}
 					// change color of signal to on
 					process_signal.setBackgroundColor(Color.parseColor(on_color));
-					process_signal.setText("Processing Video");
+					process_signal.setText(proccessing);
 				}
     	   break;
 		}
@@ -191,5 +199,20 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	            break;
 	    }
 	}
-
+	
+	private void updateViews(String mssg) {
+		// ERRORS
+		String error1 = "Compilation error. FFmpeg failed", error2 = "result: FAIL", error3 = "error when parsing input name";
+		if (mssg.equals(error1) || mssg.equals(error2) || mssg.equals(error3)) {
+			// change color of signal to off
+			process_signal.setBackgroundColor(Color.parseColor(error_color));
+			process_signal.setText(mssg
+					+ "\nSorry, check your choices and try again.");
+		} else {
+			// change color of signal to off
+			process_signal.setBackgroundColor(Color.parseColor(off_color));
+			process_signal.setText(mssg + "\n Choose a new video!");
+			
+		}
+	}
 }

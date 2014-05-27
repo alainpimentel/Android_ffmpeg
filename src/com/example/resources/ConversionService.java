@@ -3,7 +3,10 @@ package com.example.resources;
 import java.io.File;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -48,12 +51,17 @@ public class ConversionService extends IntentService {
 		synchronized (intent) {
 		   mssg = VideoHandler.videoConverter(fileTmp, fileAppRoot, in_path, out_path, fps, width, height);
 		}
-		publishResults("",mssg);
+		publishResults(mssg);
 	}
 	
-	private void publishResults(String outputPath, String result) {
+	private void publishResults(String result) {
 		Intent intent = new Intent(NOTIFICATION);
 		intent.putExtra(RESULT, result);
+		// put in SharedPreferences
+		SharedPreferences sharedpreferences = getSharedPreferences("com.example.ffmpeg_trial", Context.MODE_PRIVATE);
+		Editor editor = sharedpreferences.edit();
+		editor.putString("mssg", result);
+		editor.commit();
 		sendBroadcast(intent);
 	}
 }
