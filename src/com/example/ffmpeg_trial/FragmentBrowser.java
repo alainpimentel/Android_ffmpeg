@@ -22,7 +22,7 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
 public class FragmentBrowser extends Fragment implements OnClickListener {
 
 	private static final int REQUEST_CHOOSER = 1234;
-	Button browse_button, start_button;
+	Button browse_button, start_button, button_service;
 	TextView input_res, output_res, fps_res,
 			width_res, height_res;
 	String in_path = "", 
@@ -47,7 +47,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		fps_res = (TextView) view.findViewById(R.id.fps_res);
 		width_res = (TextView) view.findViewById(R.id.width_res);
 		height_res = (TextView) view.findViewById(R.id.height_res);
-		
+		button_service = (Button) view.findViewById(R.id.button_service);
+		button_service.setOnClickListener(this);
 		return view;
 	}
 
