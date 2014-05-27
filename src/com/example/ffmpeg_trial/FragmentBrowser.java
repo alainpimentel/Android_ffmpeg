@@ -3,11 +3,12 @@ package com.example.ffmpeg_trial;
 import java.io.File;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Telephony.Sms.Conversations;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +30,19 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			width_res, height_res;
 	String in_path = "", 
 		   out_path = "";
+	
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+	    @Override
+	    public void onReceive(Context context, Intent intent) {
+	      Bundle bundle = intent.getExtras();
+	      if (bundle != null) {
+	    	  String string = bundle.getString(ConversionService.RESULT);
+	    	  Toast.makeText(getActivity(), string,
+	                  Toast.LENGTH_LONG).show();
+	      }
+	    }
+	  };
 
 	public FragmentBrowser() {
 
@@ -52,6 +66,19 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		button_service = (Button) view.findViewById(R.id.button_service);
 		button_service.setOnClickListener(this);
 		return view;
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		getActivity().registerReceiver(receiver, new IntentFilter(
+				ConversionService.NOTIFICATION));
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		getActivity().unregisterReceiver(receiver);
 	}
 
 	@Override

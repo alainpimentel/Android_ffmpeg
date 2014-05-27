@@ -5,13 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 
 public class ConversionService extends IntentService {
-	// Defines a custom Intent action
-    public static final String BROADCAST_ACTION =
-        "com.example.android.threadsample.BROADCAST";
-    
- // Defines the key for the status "extra" in an Intent
-    public static final String EXTENDED_DATA_STATUS =
-        "com.example.android.threadsample.STATUS";
+	public static final String RESULT = "result";
+	  public static final String NOTIFICATION = "com.example.resources";
     
 	public ConversionService() {
 		super("ConversionService");
@@ -38,7 +33,12 @@ public class ConversionService extends IntentService {
 		synchronized (intent) {
 
 		}
+		publishResults("","done");
 	}
 	
-
+	private void publishResults(String outputPath, String result) {
+		Intent intent = new Intent(NOTIFICATION);
+		intent.putExtra(RESULT, result);
+		sendBroadcast(intent);
+	}
 }
