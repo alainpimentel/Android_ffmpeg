@@ -3,29 +3,40 @@ package com.example.resources;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.ffmpeg.android.Clip;
 import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.ShellUtils;
 
-import android.app.Activity;
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.util.Log;
-import android.widget.Toast;
 
 public class VideoHandler {
 	
-	public static void videoConverter(final Context context, final String in_path, final String out_path,
+	private static String mssg = "Something wrong?";
+	private static String final_out_path = "";
+	
+	public static String videoConverter(File fileTmp, File fileAppRoot, final String in_path, final String out_path,
 					String fps, String width, String height) {
-		int x =1;
-		x=2;
-		x=3;
-		Activity activity = (Activity) context;
-		File fileTmp = activity.getCacheDir();
-		File fileAppRoot = new File(activity.getApplicationInfo().dataDir);
+		
+//		Activity activity = (Activity) context;
+//		File fileTmp = activity.getCacheDir();
+//		File fileAppRoot = new File(activity.getApplicationInfo().dataDir);
 		
 		final Clip clip_in = new Clip(in_path);
-		final Clip clip_out = new Clip(out_path + "/TEST.mp4");
+		
+		try {
+			// get the input name without extension and datetime to make it unique
+			final_out_path = out_path + "/" + splitString(in_path) + getDateTime() + ".mp4";
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return "error when parsing input name";
+		}
+		
+		final Clip clip_out = new Clip(final_out_path);
 		// put flags in clip_out
 		clip_out.videoFps = fps;
 		int width_int = stringToInt(width);
@@ -54,13 +65,14 @@ public class VideoHandler {
 				
 					if (exitValue != 0) {
 							System.err.println("concat non-zero exit: " + exitValue);
-							Log.d("ffmpeg","Compilation error. FFmpeg failed");
-							Toast.makeText(context, "result: ffmpeg failed", Toast.LENGTH_LONG).show();
+							mssg = "Compilation error. FFmpeg failed";
+							Log.d("ffmpeg",mssg);
+							//Toast.makeText(context, "result: ffmpeg failed", Toast.LENGTH_LONG).show();
 					} else {
-						String path_final = out_path + "/TEST.mp4";
-						if(new File(path_final).exists()) {
-							Log.d("ffmpeg","Success file:"+ "/storage/emulated/0/Developer/result2.mp4");
-							Toast.makeText(context, "result: WIN", Toast.LENGTH_LONG).show();
+						if(new File(final_out_path).exists()) {
+							mssg = "Success file: " + final_out_path;
+							Log.d("ffmpeg", mssg);
+							//Toast.makeText(context, "result: WIN", Toast.LENGTH_LONG).show();
 						}
 					}
 				}
@@ -68,21 +80,24 @@ public class VideoHandler {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
+			mssg = "result: FAIL";
+			//Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
+			mssg = "result: FAIL";
+			//Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
+			mssg = "result: FAIL";
+			//Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
 		}
 		
-		
+		return mssg;
 	}
 	
-	public static int stringToInt(String num) {
+	private static int stringToInt(String num) {
 		int temp_num = 0;
 		
 		try {
@@ -92,6 +107,20 @@ public class VideoHandler {
 			System.out.println("Could not parse " + nfe);
 			return -1;
 		}
+	}
+	
+	private static String splitString(String str) {
+		// take out the file extension and reverse it
+		String file_path = new StringBuffer(str.split("\\.")[0]).reverse().toString();
+		// split at first "/" and reverse it
+		return new StringBuffer(file_path.split("/")[0]).reverse().toString();
+	}
+	
+	@SuppressLint("SimpleDateFormat")
+	private static String getDateTime() {
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat df = new SimpleDateFormat("_yyMMdd_HHmmss");
+        return df.format(c.getTime());
 	}
 	
 }

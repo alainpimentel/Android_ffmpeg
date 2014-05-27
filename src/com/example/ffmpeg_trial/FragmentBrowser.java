@@ -108,8 +108,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
         		   String height = height_res.getText().toString();
         		   try {
         			   
-        			   Toast.makeText(getActivity(), "Processing", Toast.LENGTH_LONG).show();
-        			   VideoHandler.videoConverter(context, in_path, out_path, fps, width, height);
+        			   Toast.makeText(getActivity(), "Disabled", Toast.LENGTH_LONG).show();
+        			   //VideoHandler.videoConverter(context, in_path, out_path, fps, width, height);
 				   } catch (Exception e) {
 					   // TODO Auto-generated catch block
 					   e.printStackTrace();
@@ -118,11 +118,33 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
         	   }
            break;
            case R.id.button_service:
-    		   Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
-
-        	   Intent mServiceIntent = new Intent(getActivity(), ConversionService.class);
-        	   // Starts the IntentService
-        	   getActivity().startService(mServiceIntent);
+				if (in_path == "" || out_path == "")
+					Toast.makeText(getActivity(), "Please choose input file", Toast.LENGTH_LONG).show();
+				else {
+					String fps = fps_res.getText().toString();
+					String width = width_res.getText().toString();
+					String height = height_res.getText().toString();
+					try {
+	
+						Toast.makeText(getActivity(), "Processing",
+								Toast.LENGTH_LONG).show();
+						Intent mServiceIntent = new Intent(getActivity(),
+								ConversionService.class);
+						Bundle extras = new Bundle();
+						extras.putString("WIDTH", width);
+						extras.putString("HEIGHT", height);
+						extras.putString("IN_PATH", in_path);
+						extras.putString("OUT_PATH", out_path);
+						extras.putString("FPS", fps);
+						mServiceIntent.putExtras(extras);
+						// Starts the IntentService
+						getActivity().startService(mServiceIntent);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Toast.makeText(getActivity(), "Done", Toast.LENGTH_LONG).show();
+				}
     	   break;
 		}
 	}
