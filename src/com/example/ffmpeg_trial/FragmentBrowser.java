@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony.Sms.Conversations;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.resources.ConversionService;
 import com.example.resources.MediaHelper;
 import com.example.resources.VideoHandler;
 import com.ipaulpro.afilechooser.utils.FileUtils;
@@ -87,8 +89,14 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 				   }
         		   Toast.makeText(getActivity(), "Done", Toast.LENGTH_LONG).show();
         	   }
-        		   
            break;
+           case R.id.button_service:
+    		   Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+
+        	   Intent mServiceIntent = new Intent(getActivity(), ConversionService.class);
+        	   // Starts the IntentService
+        	   getActivity().startService(mServiceIntent);
+    	   break;
 		}
 	}
 	
