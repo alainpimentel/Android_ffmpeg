@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,21 +26,27 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
 public class FragmentBrowser extends Fragment implements OnClickListener {
 
 	private static final int REQUEST_CHOOSER = 1234;
-	Button browse_button, start_button, button_service;
+	Button browse_button, button_service;
 	TextView input_res, output_res, fps_res,
-			width_res, height_res;
+			width_res, height_res, process_signal;
 	String in_path = "", 
-		   out_path = "";
+		   out_path = "",
+		   off_color = "#ED5645",
+		   on_color = "#5EE65E";
 	
+	// Gets results back from Intentservice
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 
 	    @Override
 	    public void onReceive(Context context, Intent intent) {
 	      Bundle bundle = intent.getExtras();
 	      if (bundle != null) {
-	    	  String string = bundle.getString(ConversionService.RESULT);
-	    	  Toast.makeText(getActivity(), string,
+	    	  String mssg = bundle.getString(ConversionService.RESULT);
+	    	  Toast.makeText(getActivity(), mssg,
 	                  Toast.LENGTH_LONG).show();
+	    	// change color of signal to on
+			process_signal.setBackgroundColor(Color.parseColor(off_color));
+			process_signal.setText(mssg);
 	      }
 	    }
 	  };
@@ -56,13 +63,13 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 
 		browse_button = (Button) view.findViewById(R.id.button_select_in);
 		browse_button.setOnClickListener(this);
-		start_button = (Button) view.findViewById(R.id.button_start);
-		start_button.setOnClickListener(this);
 		input_res = (TextView) view.findViewById(R.id.input_res);
 		output_res = (TextView) view.findViewById(R.id.output_res);
 		fps_res = (TextView) view.findViewById(R.id.fps_res);
 		width_res = (TextView) view.findViewById(R.id.width_res);
 		height_res = (TextView) view.findViewById(R.id.height_res);
+		process_signal = (TextView) view.findViewById(R.id.process_signal);
+		process_signal.setBackgroundColor(Color.parseColor(off_color));
 		button_service = (Button) view.findViewById(R.id.button_service);
 		button_service.setOnClickListener(this);
 		return view;
@@ -97,26 +104,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					Toast.makeText(getActivity(), "External Storage not accessible", Toast.LENGTH_LONG).show();
 				}
            break;
-           case R.id.button_start:
-        	   if(in_path == "" || out_path == "")
-        		   Toast.makeText(getActivity(), "Please choose input file", Toast.LENGTH_LONG).show();
-        	   else{
-        		   // TODO add checks to fps,w,h
-        		   Context context = getActivity();
-        		   String fps = fps_res.getText().toString();
-        		   String width = width_res.getText().toString();
-        		   String height = height_res.getText().toString();
-        		   try {
-        			   
-        			   Toast.makeText(getActivity(), "Disabled", Toast.LENGTH_LONG).show();
-        			   //VideoHandler.videoConverter(context, in_path, out_path, fps, width, height);
-				   } catch (Exception e) {
-					   // TODO Auto-generated catch block
-					   e.printStackTrace();
-				   }
-        		   Toast.makeText(getActivity(), "Done", Toast.LENGTH_LONG).show();
-        	   }
-           break;
            case R.id.button_service:
 				if (in_path == "" || out_path == "")
 					Toast.makeText(getActivity(), "Please choose input file", Toast.LENGTH_LONG).show();
@@ -126,7 +113,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					String height = height_res.getText().toString();
 					try {
 	
-						Toast.makeText(getActivity(), "Processing",
+						Toast.makeText(getActivity(), "Conversion has started",
 								Toast.LENGTH_LONG).show();
 						Intent mServiceIntent = new Intent(getActivity(),
 								ConversionService.class);
@@ -143,7 +130,9 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					Toast.makeText(getActivity(), "Done", Toast.LENGTH_LONG).show();
+					// change color of signal to on
+					process_signal.setBackgroundColor(Color.parseColor(on_color));
+					process_signal.setText(getResources().getString(R.string.on_process_signal));
 				}
     	   break;
 		}
@@ -163,9 +152,9 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	                
 	                input_res.setText(in_path);
 	                // Alternatively, use FileUtils.getFile(Context, Uri)
-	                if (in_path != null && FileUtils.isLocal(in_path)) {
-	                    File file = new File(in_path);
-	                }
+//	                if (in_path != null && FileUtils.isLocal(in_path)) {
+//	                    File file = new File(in_path);
+//	                }
 	                
 	                /* CHECK FILE IS A VIDEO */
 	                

@@ -13,5 +13,6 @@
     <string name="width">Width:</string>
     <string name="height">Height:</string>
     <string name="start">Start</string>
-
+	<string name="off_process_signal">Not Processing</string>
+	<string name="on_process_signal">Processing...</string>
 </resources>
