@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class VideoHandler {
 	
-	private static String mssg = "Something wrong?";
+	private static String mssg = "result: FAIL";
 	private static String final_out_path = "";
 	
 	public static String videoConverter(File fileTmp, File fileAppRoot, final String in_path, final String out_path,
@@ -70,7 +70,7 @@ public class VideoHandler {
 							//Toast.makeText(context, "result: ffmpeg failed", Toast.LENGTH_LONG).show();
 					} else {
 						if(new File(final_out_path).exists()) {
-							mssg = "Success file: " + final_out_path;
+							mssg = "Success! New File: " + final_out_path;
 							Log.d("ffmpeg", mssg);
 							//Toast.makeText(context, "result: WIN", Toast.LENGTH_LONG).show();
 						}
@@ -80,17 +80,14 @@ public class VideoHandler {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			mssg = "result: FAIL";
 			//Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			mssg = "result: FAIL";
 			//Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			mssg = "result: FAIL";
 			//Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
 		}
 		

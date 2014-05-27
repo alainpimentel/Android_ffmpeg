@@ -31,8 +31,10 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			width_res, height_res, process_signal;
 	String in_path = "", 
 		   out_path = "",
-		   off_color = "#ED5645",
-		   on_color = "#5EE65E";
+		   off_color = "#BFBFBF",
+		   on_color = "#3FD93F",
+		   error_color = "#F7513E",
+		   ret_mssg = "";
 	
 	// Gets results back from Intentservice
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -41,12 +43,32 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	    public void onReceive(Context context, Intent intent) {
 	      Bundle bundle = intent.getExtras();
 	      if (bundle != null) {
+	    	  // Return message
 	    	  String mssg = bundle.getString(ConversionService.RESULT);
-	    	  Toast.makeText(getActivity(), mssg,
-	                  Toast.LENGTH_LONG).show();
-	    	// change color of signal to on
-			process_signal.setBackgroundColor(Color.parseColor(off_color));
-			process_signal.setText(mssg);
+	    	  // ERRORS
+	    	  String error1 = "Compilation error. FFmpeg failed",
+	    			 error2 = "result: FAIL",
+	    	  		 error3 = "error when parsing input name";
+				if (mssg.equals(error1) || mssg.equals(error2) || mssg.equals(error3)) {
+					// change color of signal to off
+					process_signal.setBackgroundColor(Color.parseColor(error_color));
+					process_signal.setText(mssg + "\nSorry, check your choices and try again.");
+				} else {
+					// It was a success
+					Toast.makeText(getActivity(), mssg, Toast.LENGTH_LONG)
+							.show();
+					// change color of signal to off
+					process_signal.setBackgroundColor(Color.parseColor(off_color));
+					process_signal.setText(mssg + "\n Choose a new video!");
+					// set inputs to blank
+					input_res.setText("");
+					output_res.setText("");
+					fps_res.setText("");
+					width_res.setText("");
+					height_res.setText("");
+					in_path = "";
+				    out_path = "";
+				}
 	      }
 	    }
 	  };
@@ -70,6 +92,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		height_res = (TextView) view.findViewById(R.id.height_res);
 		process_signal = (TextView) view.findViewById(R.id.process_signal);
 		process_signal.setBackgroundColor(Color.parseColor(off_color));
+		process_signal.setText("Choose a video to convert");
 		button_service = (Button) view.findViewById(R.id.button_service);
 		button_service.setOnClickListener(this);
 		return view;
@@ -105,7 +128,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 				}
            break;
            case R.id.button_service:
-				if (in_path == "" || out_path == "")
+				if (in_path.equals("") || out_path.equals(""))
 					Toast.makeText(getActivity(), "Please choose input file", Toast.LENGTH_LONG).show();
 				else {
 					String fps = fps_res.getText().toString();
@@ -132,7 +155,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					}
 					// change color of signal to on
 					process_signal.setBackgroundColor(Color.parseColor(on_color));
-					process_signal.setText(getResources().getString(R.string.on_process_signal));
+					process_signal.setText("Processing Video");
 				}
     	   break;
 		}
