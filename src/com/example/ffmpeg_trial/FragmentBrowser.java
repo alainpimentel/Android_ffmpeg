@@ -212,6 +212,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	    }
 	}
 	
+	// Update views when returning to fragment, using the last message stored in SharedPreferenes
 	private void updateViews(String mssg) {
 		// ERRORS
 		String error1 = "Compilation error. FFmpeg failed", error2 = "result: FAIL", error3 = "error when parsing input name";
@@ -227,4 +228,5 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			
 		}
 	}
+
 }
