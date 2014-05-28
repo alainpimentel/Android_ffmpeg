@@ -26,7 +26,7 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
 public class FragmentBrowser extends Fragment implements OnClickListener {
 
 	private static final int REQUEST_CHOOSER = 1234;
-	Button browse_button, button_service;
+	Button browse_button, button_service, button_reset;
 	TextView input_res, output_res, fps_res,
 			width_res, height_res, process_signal;
 	String in_path = "", 
@@ -96,6 +96,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		process_signal.setText("Choose a video to convert");
 		button_service = (Button) view.findViewById(R.id.button_service);
 		button_service.setOnClickListener(this);
+		button_reset = (Button) view.findViewById(R.id.button_reset);
+		button_reset.setOnClickListener(this);
 		return view;
 	}
 	
@@ -165,7 +167,17 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					process_signal.setBackgroundColor(Color.parseColor(on_color));
 					process_signal.setText(proccessing);
 				}
-    	   break;
+			break;
+            case R.id.button_reset:
+				// set inputs to blank
+				input_res.setText("");
+				output_res.setText("");
+				fps_res.setText("");
+				width_res.setText("");
+				height_res.setText("");
+				in_path = "";
+				out_path = "";
+			break;
 		}
 	}
 	
