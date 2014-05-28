@@ -113,6 +113,7 @@ public class FragmentOutput extends ListFragment {
 					adapter.remove(selection);
 					adapter.notifyDataSetChanged();
 				}
+				mode.finish();
 				return true;
 			}
 			case R.id.info: {

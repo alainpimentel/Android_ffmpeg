@@ -22,9 +22,6 @@ public class VideoHandler {
 	
 	private static String mssg = "result: FAIL";
 	private static String final_out_path = "";
-	private static final int MY_NOTIFICATION_ID=1;
-	static NotificationManager notificationManager;
-	static Notification myNotification;
 	
 	public static String videoConverter(final Context c, File fileTmp, File fileAppRoot, final String in_path, final String out_path,
 					String fps, String width, String height) {
@@ -68,30 +65,6 @@ public class VideoHandler {
 				@Override
 				public void shellOut(String shellLine) {
 					System.out.println("MIX> " + shellLine);
-					//generate notification
-					   String notificationText = "Conversion in progress";
-					   myNotification = new NotificationCompat.Builder(c)
-					   .setContentTitle("Progress")
-					   .setContentText(notificationText)
-					   .setTicker("Notification!")
-					   .setWhen(System.currentTimeMillis())
-					   .setDefaults(Notification.DEFAULT_SOUND)
-					   .setAutoCancel(true)
-					   .setSmallIcon(R.drawable.ic_launcher)
-					   .build();
-					 /*//generate notification
-					   String notificationText = "Conversion in progress";
-					   myNotification = new NotificationCompat.Builder(c)
-					   .setContentTitle("Progress")
-					   .setContentText(notificationText)
-					   .setTicker("Notification!")
-					   .setWhen(System.currentTimeMillis())
-					   .setDefaults(Notification.DEFAULT_SOUND)
-					   .setAutoCancel(true)
-					   .setSmallIcon(R.drawable.ic_launcher)
-					   .build();
-					   
-					   notificationManager.notify(MY_NOTIFICATION_ID, myNotification);*/
 					}
 				
 				@Override

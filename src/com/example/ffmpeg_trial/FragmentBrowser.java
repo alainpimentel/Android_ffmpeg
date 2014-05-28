@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		   error_color = "#F7513E",
 		   ret_mssg = "",
 		   proccessing = "Processing Video";
+	SharedPreferences sharedpreferences;
 	
 	// Gets results back from Intentservice
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -66,14 +68,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					// change color of signal to off
 					process_signal.setBackgroundColor(Color.parseColor(off_color));
 					process_signal.setText(mssg + "\n Choose a new video!");
-					// set inputs to blank
-					input_res.setText("");
-					output_res.setText("");
-					fps_res.setText("");
-					width_res.setText("");
-					height_res.setText("");
-					in_path = "";
-				    out_path = "";
+					
+					resetInputs();
 				}
 				// Send Notification
 				sendNotification(mssg);
@@ -113,7 +109,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		super.onResume();
 		getActivity().registerReceiver(receiver, new IntentFilter(
 				ConversionService.NOTIFICATION));
-		SharedPreferences sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", 
+		sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", 
 				Context.MODE_PRIVATE);
 		if (sharedpreferences.contains("mssg"))
 	      {
@@ -179,17 +175,15 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					// change color of signal to on
 					process_signal.setBackgroundColor(Color.parseColor(on_color));
 					process_signal.setText(proccessing);
+					sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", Context.MODE_PRIVATE);
+					Editor editor = sharedpreferences.edit();
+					editor.putString("mssg", proccessing);
+					editor.commit();
+					resetInputs();
 				}
 			break;
             case R.id.button_reset:
-				// set inputs to blank
-				input_res.setText("");
-				output_res.setText("");
-				fps_res.setText("");
-				width_res.setText("");
-				height_res.setText("");
-				in_path = "";
-				out_path = "";
+				resetInputs();
 			break;
 		}
 	}
@@ -218,7 +212,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	                
 	            }
 	            break;
-	    }
+	    }	
 	}
 	
 	// Update views when returning to fragment, using the last message stored in SharedPreferenes
@@ -230,7 +224,12 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			process_signal.setBackgroundColor(Color.parseColor(error_color));
 			process_signal.setText(mssg
 					+ "\nSorry, check your choices and try again.");
-		} else {
+		} 
+		else if (mssg.equals(proccessing)) {
+			process_signal.setBackgroundColor(Color.parseColor(on_color));
+			process_signal.setText(mssg);
+		}
+		else {
 			// change color of signal to off
 			process_signal.setBackgroundColor(Color.parseColor(off_color));
 			process_signal.setText(mssg + "\n Choose a new video!");
@@ -264,6 +263,17 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		NotificationManager notificationManager = 
 		        (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(MY_NOTIFICATION_ID, myNotification.build());
+	}
+	
+	private void resetInputs() {
+		// set inputs to blank
+		input_res.setText("");
+		output_res.setText("");
+		fps_res.setText("");
+		width_res.setText("");
+		height_res.setText("");
+		in_path = "";
+		out_path = "";
 	}
 
 }
