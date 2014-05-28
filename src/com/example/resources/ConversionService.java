@@ -49,7 +49,7 @@ public class ConversionService extends IntentService {
 		Log.d("Intent Service", "service started");
 		String mssg = "Message returned goes here";
 		synchronized (intent) {
-		   mssg = VideoHandler.videoConverter(fileTmp, fileAppRoot, in_path, out_path, fps, width, height);
+		   mssg = VideoHandler.videoConverter(getApplicationContext(), fileTmp, fileAppRoot, in_path, out_path, fps, width, height);
 		}
 		publishResults(mssg);
 	}

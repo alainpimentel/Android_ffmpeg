@@ -3,6 +3,9 @@ package com.example.ffmpeg_trial;
 import java.io.File;
 
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +14,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,6 +50,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	      if (bundle != null) {
 	    	  // Return message
 	    	  String mssg = bundle.getString(ConversionService.RESULT);
+	    	  
 	    	  // ERRORS
 	    	  String error1 = "Compilation error. FFmpeg failed",
 	    			 error2 = "result: FAIL",
@@ -70,6 +75,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					in_path = "";
 				    out_path = "";
 				}
+				// Send Notification
+				sendNotification(mssg);
 	      }
 	    }
 	  };
@@ -159,6 +166,12 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 						mServiceIntent.putExtras(extras);
 						// Starts the IntentService
 						getActivity().startService(mServiceIntent);
+						
+						// Send Notification
+						sendNotification("Conversion is in progress");
+						
+						// Starts the IntentService
+						getActivity().startService(mServiceIntent);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -194,10 +207,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	                Toast.makeText(getActivity(), in_path, Toast.LENGTH_LONG).show();
 	                
 	                input_res.setText(in_path);
-	                // Alternatively, use FileUtils.getFile(Context, Uri)
-//	                if (in_path != null && FileUtils.isLocal(in_path)) {
-//	                    File file = new File(in_path);
-//	                }
 	                
 	                /* CHECK FILE IS A VIDEO */
 	                
@@ -227,6 +236,34 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			process_signal.setText(mssg + "\n Choose a new video!");
 			
 		}
+	}
+	
+	private void sendNotification(String mssg) {
+		// generate notification: http://developer.android.com/training/notify-user/build-notification.html#click
+		final int MY_NOTIFICATION_ID = 1; 
+		String notificationText = mssg;
+		NotificationCompat.Builder myNotification = new NotificationCompat.Builder(
+				getActivity()).setContentTitle("Progress")
+				.setContentText(notificationText)
+				.setTicker("Notification!")
+				.setWhen(System.currentTimeMillis())
+				.setDefaults(Notification.DEFAULT_SOUND)
+				.setAutoCancel(true)
+				.setSmallIcon(R.drawable.ic_launcher);
+		Intent resultIntent = new Intent(getActivity(), MainActivity.class);
+		PendingIntent resultPendingIntent =
+		    PendingIntent.getActivity(
+    		getActivity(),
+		    0,
+		    resultIntent,
+		    PendingIntent.FLAG_UPDATE_CURRENT
+		);
+		
+		myNotification.setContentIntent(resultPendingIntent);
+		
+		NotificationManager notificationManager = 
+		        (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify(MY_NOTIFICATION_ID, myNotification.build());
 	}
 
 }

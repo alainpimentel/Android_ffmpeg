@@ -8,17 +8,25 @@ import java.util.Calendar;
 
 import org.ffmpeg.android.Clip;
 import org.ffmpeg.android.FfmpegController;
+import org.ffmpeg.android.R;
 import org.ffmpeg.android.ShellUtils;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class VideoHandler {
 	
 	private static String mssg = "result: FAIL";
 	private static String final_out_path = "";
+	private static final int MY_NOTIFICATION_ID=1;
+	static NotificationManager notificationManager;
+	static Notification myNotification;
 	
-	public static String videoConverter(File fileTmp, File fileAppRoot, final String in_path, final String out_path,
+	public static String videoConverter(final Context c, File fileTmp, File fileAppRoot, final String in_path, final String out_path,
 					String fps, String width, String height) {
 		
 //		Activity activity = (Activity) context;
@@ -55,9 +63,35 @@ public class VideoHandler {
 			fc = new FfmpegController(fileTmp, fileAppRoot);
 			fc.processVideo(clip_in, clip_out, false, new ShellUtils.ShellCallback() {
 				
+				
+				
 				@Override
 				public void shellOut(String shellLine) {
 					System.out.println("MIX> " + shellLine);
+					//generate notification
+					   String notificationText = "Conversion in progress";
+					   myNotification = new NotificationCompat.Builder(c)
+					   .setContentTitle("Progress")
+					   .setContentText(notificationText)
+					   .setTicker("Notification!")
+					   .setWhen(System.currentTimeMillis())
+					   .setDefaults(Notification.DEFAULT_SOUND)
+					   .setAutoCancel(true)
+					   .setSmallIcon(R.drawable.ic_launcher)
+					   .build();
+					 /*//generate notification
+					   String notificationText = "Conversion in progress";
+					   myNotification = new NotificationCompat.Builder(c)
+					   .setContentTitle("Progress")
+					   .setContentText(notificationText)
+					   .setTicker("Notification!")
+					   .setWhen(System.currentTimeMillis())
+					   .setDefaults(Notification.DEFAULT_SOUND)
+					   .setAutoCancel(true)
+					   .setSmallIcon(R.drawable.ic_launcher)
+					   .build();
+					   
+					   notificationManager.notify(MY_NOTIFICATION_ID, myNotification);*/
 					}
 				
 				@Override
