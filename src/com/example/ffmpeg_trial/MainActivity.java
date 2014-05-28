@@ -31,52 +31,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		/*
-		 * videoHandler vh = new videoHandler(); ArrayList<Clip> in = new
-		 * ArrayList<Clip>(); final Clip clip_in = new
-		 * Clip("/storage/emulated/0/Developer/test.mp4"); // input source
-		 * clip_in.isVideo(); in.add(clip_in); boolean video = new File(
-		 * "/storage/emulated/0/Developer/result.mp4").exists();
-		 * Toast.makeText(MainActivity.this, "result: " + video,
-		 * Toast.LENGTH_LONG).show();
-		 * 
-		 * Activity activity = (Activity) MainActivity.this; File fileTmp =
-		 * activity.getCacheDir(); File fileAppRoot = new
-		 * File(activity.getApplicationInfo().dataDir); //String dir =
-		 * Environment
-		 * .getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES
-		 * ).getAbsolutePath(); //Toast.makeText(MainActivity.this, "result: " +
-		 * dir, Toast.LENGTH_LONG).show(); final Clip clip_out = new
-		 * Clip("/storage/emulated/0/Developer/result2.mp4"); //put flags in
-		 * clip clip_out.videoFps = "30"; clip_out.width = 480; clip_out.height
-		 * = 320; clip_out.videoCodec = "libx264"; clip_out.audioCodec = "copy";
-		 * 
-		 * try { FfmpegController fc = new FfmpegController(fileTmp,
-		 * fileAppRoot); // works! //fc.convertToMPEG(clip_in,
-		 * "/storage/emulated/0/Developer/result.mp4", fc.processVideo(clip_in,
-		 * clip_out, false, new ShellUtils.ShellCallback() {
-		 * 
-		 * @Override public void shellOut(String shellLine) {
-		 * System.out.println("MIX> " + shellLine); }
-		 * 
-		 * @Override public void processComplete(int exitValue) {
-		 * 
-		 * if (exitValue != 0) { System.err.println("concat non-zero exit: " +
-		 * exitValue); Log.d("ffmpeg","Compilation error. FFmpeg failed");
-		 * Toast.makeText(MainActivity.this, "result: ffmpeg failed",
-		 * Toast.LENGTH_LONG).show(); } else { if(new File(
-		 * "/storage/emulated/0/Developer/result2.mp4").exists()) {
-		 * Log.d("ffmpeg","Success file:"+
-		 * "/storage/emulated/0/Developer/result2.mp4");
-		 * Toast.makeText(MainActivity.this, "result: WIN",
-		 * Toast.LENGTH_LONG).show(); } } } }); //fc.getInfo(clip_in); } catch
-		 * (FileNotFoundException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
-		 * catch block e.printStackTrace(); } catch (InterruptedException e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); } catch
-		 * (Exception e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
 		setContentView(R.layout.activity_main);
 
 		// Initializing
@@ -93,7 +47,6 @@ public class MainActivity extends Activity {
 		dataList.add(new DrawerItem("Browse",
 				R.drawable.ic_action_import_export));
 		dataList.add(new DrawerItem("Output", R.drawable.ic_action_video));
-		dataList.add(new DrawerItem("Processing", R.drawable.ic_action_good));
 		dataList.add(new DrawerItem("Other Options"));
 		dataList.add(new DrawerItem("About", R.drawable.ic_action_about));
 
@@ -151,18 +104,11 @@ public class MainActivity extends Activity {
 		case 2:
 			fragment = new FragmentOutput();
 			break;
-		case 3:
-			fragment = new FragmentProcessing();
-			args.putString(FragmentProcessing.ITEM_NAME, dataList
+		case 4:
+			fragment = new FragmentAbout();
+			args.putString(FragmentAbout.ITEM_NAME, dataList
 					.get(possition).getItemName());
-			args.putInt(FragmentProcessing.IMAGE_RESOURCE_ID,
-					dataList.get(possition).getImgResID());
-			break;
-		case 5:
-			fragment = new FragmentProcessing();
-			args.putString(FragmentProcessing.ITEM_NAME, dataList
-					.get(possition).getItemName());
-			args.putInt(FragmentProcessing.IMAGE_RESOURCE_ID,
+			args.putInt(FragmentAbout.IMAGE_RESOURCE_ID,
 					dataList.get(possition).getImgResID());
 			break;
 
