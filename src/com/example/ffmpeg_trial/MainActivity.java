@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -151,10 +150,6 @@ public class MainActivity extends Activity {
 			break;
 		case 2:
 			fragment = new FragmentOutput();
-			args.putString(FragmentOutput.ITEM_NAME, dataList.get(possition)
-					.getItemName());
-			args.putInt(FragmentOutput.IMAGE_RESOURCE_ID, dataList.get(possition)
-                    .getImgResID());
 			break;
 		case 3:
 			fragment = new FragmentProcessing();
@@ -164,10 +159,10 @@ public class MainActivity extends Activity {
 					dataList.get(possition).getImgResID());
 			break;
 		case 5:
-			fragment = new FragmentOutput();
-			args.putString(FragmentOutput.ITEM_NAME, dataList.get(possition)
-					.getItemName());
-			args.putInt(FragmentOutput.IMAGE_RESOURCE_ID,
+			fragment = new FragmentProcessing();
+			args.putString(FragmentProcessing.ITEM_NAME, dataList
+					.get(possition).getItemName());
+			args.putInt(FragmentProcessing.IMAGE_RESOURCE_ID,
 					dataList.get(possition).getImgResID());
 			break;
 
