@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.app.ActionBar.LayoutParams;
+import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -15,8 +16,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
-import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -26,9 +27,11 @@ import android.widget.TextView;
 public class FragmentOutput extends ListFragment {
 	
 	ArrayAdapter<String> adapter;
+	ListView lv;
 	int itemPosition = -1; // position of the selected view
 	View sel_lv = null; // saves the selected view, passed to popup window
 	String sel_file_text = "";
+	String fileRoot = "";
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -39,7 +42,8 @@ public class FragmentOutput extends ListFragment {
 		File[] filesArray = dir.listFiles();
 		ArrayList<String> filesList = new ArrayList<String>();
 		for (File file : filesArray) {
-			String path = file.getAbsolutePath();
+			String path = file.getName();
+			fileRoot = file.getParent();
 			filesList.add(path);
 		}
 		// adpater for listview, will contain paths of files
@@ -60,6 +64,7 @@ public class FragmentOutput extends ListFragment {
 			     return true;
 			   }
 			});
+		lv = getListView();
 	}
 	
 	@Override
@@ -128,8 +133,9 @@ public class FragmentOutput extends ListFragment {
 				return true;
 			}
 			case R.id.info: {
-				sel_file_text = adapter.getItem(itemPosition);
-				displayPopupWindow(sel_lv);
+//				sel_file_text = adapter.getItem(itemPosition);
+//				displayPopupWindow(sel_lv);
+				new MyDialogFragment().show(getFragmentManager(), "MyDialog");
 				mode.finish();
 				return true;
 			}
@@ -147,34 +153,41 @@ public class FragmentOutput extends ListFragment {
 	};
 	
 	// Display popup attached to the button as a position anchor
-	  private void displayPopupWindow(View anchorView) {
-		  View popupView = getActivity().getLayoutInflater().inflate(R.layout.popup_info, null);
+	private void displayPopupWindow(View anchorView) {
+		View popupView = getActivity().getLayoutInflater().inflate(R.layout.popup_info, null);
+		
+		PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-		    PopupWindow popupWindow = new PopupWindow(popupView, 
-		                           LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		// Example: If you have a TextView inside `popup_layout.xml`
+		TextView tv = (TextView) popupView.findViewById(R.id.tvCaption);
 
-		    // Example: If you have a TextView inside `popup_layout.xml`    
-		    TextView tv = (TextView) popupView.findViewById(R.id.tvCaption);
+		tv.setText(sel_file_text);
 
-		    tv.setText(sel_file_text);
+		// Initialize more widgets from `popup_layout.xml`
+		
+		// Closes the popup window when touch outside of it - when looses focus
+		popupWindow.setOutsideTouchable(true);
+		// If the PopupWindow should be focusable
+		popupWindow.setFocusable(true);
 
-		    // Initialize more widgets from `popup_layout.xml`
+		// If you need the PopupWindow to dismiss when when touched outside
+		popupWindow.setBackgroundDrawable(new ColorDrawable());
+		popupWindow.getBackground().setAlpha(128);
 
-		    // If the PopupWindow should be focusable
-		    popupWindow.setFocusable(true);
+		int location[] = new int[2];
 
-		    // If you need the PopupWindow to dismiss when when touched outside 
-		    popupWindow.setBackgroundDrawable(new ColorDrawable());
+		/*// Get the View's(the one that was clicked in the Fragment) location
+		anchorView.getLocationOnScreen(location);
 
-		    int location[] = new int[2];
-
-		    // Get the View's(the one that was clicked in the Fragment) location
-		    anchorView.getLocationOnScreen(location);
-
-		    // Using location, the PopupWindow will be displayed right under anchorView
-		    popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, 
-		                                     location[0], location[1] + anchorView.getHeight());
-	  }
+		// Using location, the PopupWindow will be displayed right under
+		// anchorView
+		popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, location[0],
+				location[1] + anchorView.getHeight());*/
+		
+		 // Set content width and height
+		popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+		popupWindow.showAsDropDown(anchorView, 20, 0);
+	}
 	
 	private void deleteVideo(String path) {
 		File file = new File(path);
