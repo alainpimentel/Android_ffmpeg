@@ -5,7 +5,7 @@
 
     <TextView
         android:id="@+id/name" 
-        android:text="Name:" 
+        android:text="Name: " 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -13,7 +13,7 @@
         android:layout_marginLeft="5dp" />
     <TextView
         android:id="@+id/path" 
-        android:text="Path:" 
+        android:text="Path: " 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -21,7 +21,15 @@
         android:layout_marginLeft="5dp" />
     <TextView
         android:id="@+id/size" 
-        android:text="Size:" 
+        android:text="Size: " 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="3dp" 
+        android:layout_marginLeft="5dp"/>
+    <TextView
+        android:id="@+id/lastM" 
+        android:text="Last Modified: " 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
