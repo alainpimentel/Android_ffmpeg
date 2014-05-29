@@ -62,9 +62,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					process_signal.setBackgroundColor(Color.parseColor(error_color));
 					process_signal.setText(mssg + "\nSorry, check your choices and try again.");
 				} else {
-					// It was a success
-					Toast.makeText(getActivity(), mssg, Toast.LENGTH_LONG)
-							.show();
 					// change color of signal to off
 					process_signal.setBackgroundColor(Color.parseColor(off_color));
 					process_signal.setText(mssg + "\n Choose a new video!");
@@ -129,7 +126,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		switch(v.getId()) {
 			case R.id.button_select_in:
 				if(MediaHelper.isExternalStorageWritable()) {
-					Toast.makeText(getActivity(), "Clicked on button", Toast.LENGTH_LONG).show();
 					// Create the ACTION_GET_CONTENT Intent
 					Intent getContentIntent = FileUtils.createGetContentIntent();
 
@@ -148,9 +144,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					String width = width_res.getText().toString();
 					String height = height_res.getText().toString();
 					try {
-	
-						Toast.makeText(getActivity(), "Conversion has started",
-								Toast.LENGTH_LONG).show();
 						Intent mServiceIntent = new Intent(getActivity(),
 								ConversionService.class);
 						Bundle extras = new Bundle();
@@ -196,7 +189,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	                
 	                // Get the File path from the Uri
 	                in_path = FileUtils.getPath(getActivity(), uri);
-	                Toast.makeText(getActivity(), in_path, Toast.LENGTH_LONG).show();
+	                //Toast.makeText(getActivity(), in_path, Toast.LENGTH_LONG).show();
 	                
 	                input_res.setText(in_path);
 	                

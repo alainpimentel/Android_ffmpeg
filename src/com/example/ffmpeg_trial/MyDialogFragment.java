@@ -9,15 +9,20 @@ import java.util.Date;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MyDialogFragment extends DialogFragment{
 	SharedPreferences sharedpreferences;
 	TextView name, path, size, lastM;
+	ImageView tn;
     public MyDialogFragment() {
         // Empty constructor required for DialogFragment
     }
@@ -37,6 +42,7 @@ public class MyDialogFragment extends DialogFragment{
 			file = new File(filePath);
 			
 			// GetTextviews
+			tn = (ImageView) view.findViewById(R.id.tn);
 			name = (TextView) view.findViewById(R.id.name);
 			path = (TextView) view.findViewById(R.id.path);
 			size = (TextView) view.findViewById(R.id.size);
@@ -46,6 +52,7 @@ public class MyDialogFragment extends DialogFragment{
 			name.append(file.getName());
 			path.append(file.getParent());
 			
+			//size
 			Double value = file.length()/1024.0/1024.0; // convert B to MB
 			DecimalFormat df=new DecimalFormat("0.00");
 			String formate = df.format(value); 
@@ -57,12 +64,16 @@ public class MyDialogFragment extends DialogFragment{
 				e.printStackTrace();
 			}
 			size.append(String.valueOf(finalValue) + " MB");
-
+			
+			//date
 			Date lastModDate = new Date(file.lastModified());
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			lastM.append(String.valueOf(formatter.format(lastModDate)));
 			
-			
+			//thumbnail
+			Bitmap thumb = ThumbnailUtils.createVideoThumbnail(file.getPath(),
+				    MediaStore.Images.Thumbnails.MINI_KIND);
+			tn.setImageBitmap(thumb);
 			
 		}
 		
