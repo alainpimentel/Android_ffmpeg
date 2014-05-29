@@ -1,6 +1,8 @@
 package com.example.ffmpeg_trial;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -43,9 +45,18 @@ public class MyDialogFragment extends DialogFragment{
 			// Set text
 			name.append(file.getName());
 			path.append(file.getParent());
-		
-			long sizeOf = file.length()/1024/1024; // convert from B to MB
-			size.append(String.valueOf(sizeOf ) + " MB");
+			
+			Double value = file.length()/1024.0/1024.0; // convert B to MB
+			DecimalFormat df=new DecimalFormat("0.00");
+			String formate = df.format(value); 
+			double finalValue = 0;
+			try {
+				finalValue = (Double)df.parse(formate) ;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			size.append(String.valueOf(finalValue) + " MB");
 
 			Date lastModDate = new Date(file.lastModified());
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

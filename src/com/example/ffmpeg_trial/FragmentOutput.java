@@ -1,6 +1,7 @@
 package com.example.ffmpeg_trial;
 
 import java.io.File;
+import java.text.ChoiceFormat;
 import java.util.ArrayList;
 
 import android.app.ListFragment;
@@ -58,10 +59,14 @@ public class FragmentOutput extends ListFragment {
 			     view.setTag(itemPosition);
 			     view.setSelected(true);
 			     sel_lv = view;
+			     view.setBackgroundResource(android.R.color.holo_blue_light);
 			     return true;
 			   }
 			});
 		lv = getListView();
+		lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		lv.setSelector(R.drawable.listitem_background); // can do different kind of colors in diff states
+		
 	}
 	
 	@Override
@@ -83,14 +88,6 @@ public class FragmentOutput extends ListFragment {
 
 	    startActivity(intent);
 	}
-	
-	/*@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-	                                ContextMenuInfo menuInfo) {
-	    super.onCreateContextMenu(menu, v, menuInfo);
-	    MenuInflater inflater = getActivity().getMenuInflater();
-	    inflater.inflate(R.menu.context_menu, menu);
-	}*/
 	
 	private ActionMode.Callback modeCallBack = new ActionMode.Callback() {
 		
@@ -126,20 +123,23 @@ public class FragmentOutput extends ListFragment {
 					adapter.remove(selection);
 					adapter.notifyDataSetChanged();
 				}
+				//sel_lv.setBackgroundResource(android.R.color.transparent); // transparent background
 				mode.finish();
 				return true;
 			}
 			case R.id.info: {
-				sel_file_text = adapter.getItem(itemPosition);
+				sel_file_text = adapter.getItem(itemPosition); // content of item
 				sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", Context.MODE_PRIVATE);
 				Editor editor = sharedpreferences.edit();
 				editor.putString("file", fileRoot + "/" +sel_file_text);
 				editor.commit();
 				new MyDialogFragment().show(getFragmentManager(), "MyDialog");
+				//sel_lv.setBackgroundResource(android.R.color.transparent);
 				mode.finish();
 				return true;
 			}
 			default:
+				//sel_lv.setBackgroundResource(android.R.color.transparent);
 				return false;
 			}
 		}
@@ -147,6 +147,7 @@ public class FragmentOutput extends ListFragment {
 		// Called when the user selects a contextual menu item
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
+			sel_lv.setBackgroundResource(android.R.color.transparent);
 			mode = null;
 		}
 
