@@ -3,24 +3,32 @@ package com.example.ffmpeg_trial;
 import java.io.File;
 import java.util.ArrayList;
 
+import android.app.ActionBar.LayoutParams;
 import android.app.ListFragment;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.ActionMode;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 public class FragmentOutput extends ListFragment {
 	
 	ArrayAdapter<String> adapter;
-	int itemPosition = -1;
+	int itemPosition = -1; // position of the selected view
+	View sel_lv = null; // saves the selected view, passed to popup window
+	String sel_file_text = "";
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -42,11 +50,13 @@ public class FragmentOutput extends ListFragment {
 		//registerForContextMenu(getListView()); //link listview to context menu
 		
 		getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			   public boolean onItemLongClick (AdapterView parent, View view, int position, long id) {
+			   public boolean onItemLongClick (AdapterView<?> parent, View view, int position, long id) {
 			     System.out.println("Long click");
 			     getActivity().startActionMode(modeCallBack);
-			     view.setSelected(true);
 			     itemPosition = position;
+			     view.setTag(itemPosition);
+			     view.setSelected(true);
+			     sel_lv = view;
 			     return true;
 			   }
 			});
@@ -101,6 +111,7 @@ public class FragmentOutput extends ListFragment {
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			int id = item.getItemId();
+			
 			//AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 			switch (id) {
 			case R.id.delete: {
@@ -117,7 +128,9 @@ public class FragmentOutput extends ListFragment {
 				return true;
 			}
 			case R.id.info: {
-				System.out.println(" info ");
+				sel_file_text = adapter.getItem(itemPosition);
+				displayPopupWindow(sel_lv);
+				mode.finish();
 				return true;
 			}
 			default:
@@ -132,6 +145,36 @@ public class FragmentOutput extends ListFragment {
 		}
 
 	};
+	
+	// Display popup attached to the button as a position anchor
+	  private void displayPopupWindow(View anchorView) {
+		  View popupView = getActivity().getLayoutInflater().inflate(R.layout.popup_info, null);
+
+		    PopupWindow popupWindow = new PopupWindow(popupView, 
+		                           LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+		    // Example: If you have a TextView inside `popup_layout.xml`    
+		    TextView tv = (TextView) popupView.findViewById(R.id.tvCaption);
+
+		    tv.setText(sel_file_text);
+
+		    // Initialize more widgets from `popup_layout.xml`
+
+		    // If the PopupWindow should be focusable
+		    popupWindow.setFocusable(true);
+
+		    // If you need the PopupWindow to dismiss when when touched outside 
+		    popupWindow.setBackgroundDrawable(new ColorDrawable());
+
+		    int location[] = new int[2];
+
+		    // Get the View's(the one that was clicked in the Fragment) location
+		    anchorView.getLocationOnScreen(location);
+
+		    // Using location, the PopupWindow will be displayed right under anchorView
+		    popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, 
+		                                     location[0], location[1] + anchorView.getHeight());
+	  }
 	
 	private void deleteVideo(String path) {
 		File file = new File(path);
