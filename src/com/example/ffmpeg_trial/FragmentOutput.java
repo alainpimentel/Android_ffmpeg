@@ -3,13 +3,11 @@ package com.example.ffmpeg_trial;
 import java.io.File;
 import java.util.ArrayList;
 
-import android.app.ActionBar.LayoutParams;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,13 +15,10 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 public class FragmentOutput extends ListFragment {
 	
@@ -126,7 +121,7 @@ public class FragmentOutput extends ListFragment {
 				if(itemPosition != -1) {
 					String selection = adapter.getItem(itemPosition);
 					// remove from phone
-					deleteVideo(selection);
+					deleteVideo(fileRoot+ "/" + selection);
 					// remove from list and update
 					adapter.remove(selection);
 					adapter.notifyDataSetChanged();

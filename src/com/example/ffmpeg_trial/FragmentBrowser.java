@@ -166,8 +166,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 						// Send Notification
 						sendNotification("Conversion is in progress");
 						
-						// Starts the IntentService
-						getActivity().startService(mServiceIntent);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
