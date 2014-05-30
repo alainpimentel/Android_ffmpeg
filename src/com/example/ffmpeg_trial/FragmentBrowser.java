@@ -3,9 +3,6 @@ package com.example.ffmpeg_trial;
 import java.io.File;
 
 import android.app.Fragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +12,12 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,11 +32,12 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	Button browse_button, button_service, button_reset;
 	TextView input_res, output_res, fps_res,
 			width_res, height_res, process_signal;
+	TableRow rowIn, rowOut;
 	String in_path = "", 
 		   out_path = "",
-		   off_color = "#BFBFBF",
-		   on_color = "#3FD93F",
-		   error_color = "#F7513E",
+		   off_color = "#33B5E5", // Blue
+		   on_color = "#99CC00",  // Green
+		   error_color = "#FF4444", // Red
 		   ret_mssg = "",
 		   proccessing = "Processing Video";
 	SharedPreferences sharedpreferences;
@@ -61,13 +59,16 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 				if (mssg.equals(error1) || mssg.equals(error2) || mssg.equals(error3)) {
 					// change color of signal to off
 					process_signal.setBackgroundColor(Color.parseColor(error_color));
-					process_signal.setText(mssg + "\nSorry, check your choices and try again.");
+					process_signal.setText(mssg + "\nCheck your choices and try again.");
 				} else {
 					// change color of signal to off
 					process_signal.setBackgroundColor(Color.parseColor(off_color));
 					process_signal.setText(mssg + "\n Choose a new video!");
 					
 					resetInputs();
+					// Hide Outputs
+					rowIn.setVisibility(View.GONE);
+					rowOut.setVisibility(View.GONE);
 				}
 				// Send Notification. ALREADY sent in service
 				//MyNotification.sendNotification(getActivity(), mssg);
@@ -99,6 +100,11 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		button_service.setOnClickListener(this);
 		button_reset = (Button) view.findViewById(R.id.button_reset);
 		button_reset.setOnClickListener(this);
+		rowIn = (TableRow) view.findViewById(R.id.tableRow2);
+		rowOut = (TableRow) view.findViewById(R.id.tableRow3);
+		// Hide in and out initially
+		rowIn.setVisibility(View.GONE);
+		rowOut.setVisibility(View.GONE);
 		return view;
 	}
 	
@@ -171,7 +177,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					Editor editor = sharedpreferences.edit();
 					editor.putString("mssg", proccessing);
 					editor.commit();
-					resetInputs();
+					//resetInputs();
 				}
 			break;
             case R.id.button_reset:
@@ -202,6 +208,9 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	                out_path = str_dir.getAbsolutePath();
 	                output_res.setText(out_path);
 	                
+	                // Show Outputs
+					rowIn.setVisibility(View.VISIBLE);
+					rowOut.setVisibility(View.VISIBLE);
 	            }
 	            break;
 	    }	
@@ -225,37 +234,11 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			// change color of signal to off
 			process_signal.setBackgroundColor(Color.parseColor(off_color));
 			process_signal.setText(mssg + "\n Choose a new video!");
-			
+			// Hide Outputs
+			rowIn.setVisibility(View.GONE);
+			rowOut.setVisibility(View.GONE);
 		}
 	}
-	
-	/*private void sendNotification(String mssg) {
-		// generate notification: http://developer.android.com/training/notify-user/build-notification.html#click
-		final int MY_NOTIFICATION_ID = 1; 
-		String notificationText = mssg;
-		NotificationCompat.Builder myNotification = new NotificationCompat.Builder(
-				getActivity()).setContentTitle("Progress")
-				.setContentText(notificationText)
-				.setTicker("Notification!")
-				.setWhen(System.currentTimeMillis())
-				.setDefaults(Notification.DEFAULT_SOUND)
-				.setAutoCancel(true)
-				.setSmallIcon(R.drawable.ic_launcher);
-		Intent resultIntent = new Intent(getActivity(), MainActivity.class);
-		PendingIntent resultPendingIntent =
-		    PendingIntent.getActivity(
-    		getActivity(),
-		    0,
-		    resultIntent,
-		    PendingIntent.FLAG_UPDATE_CURRENT
-		);
-		
-		myNotification.setContentIntent(resultPendingIntent);
-		
-		NotificationManager notificationManager = 
-		        (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(MY_NOTIFICATION_ID, myNotification.build());
-	}*/
 	
 	private void resetInputs() {
 		// set inputs to blank
@@ -266,6 +249,9 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		height_res.setText("");
 		in_path = "";
 		out_path = "";
+		// Hide Outputs
+		rowIn.setVisibility(View.GONE);
+		rowOut.setVisibility(View.GONE);
 	}
 
 }
