@@ -1,7 +1,6 @@
 package com.example.ffmpeg_trial;
 
 import java.io.File;
-import java.text.ChoiceFormat;
 import java.util.ArrayList;
 
 import android.app.ListFragment;
@@ -20,6 +19,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.resources.OutputAdapter;
 
 public class FragmentOutput extends ListFragment {
 	
@@ -47,7 +48,8 @@ public class FragmentOutput extends ListFragment {
 		// adpater for listview, will contain paths of files
 		adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, filesList);
-		setListAdapter(adapter);
+		//setListAdapter(adapter);
+		setListAdapter(new OutputAdapter<String>(getActivity(), filesList));
 		
 		//registerForContextMenu(getListView()); //link listview to context menu
 		
