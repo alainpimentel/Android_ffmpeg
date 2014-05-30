@@ -1,7 +1,11 @@
 package com.example.ffmpeg_trial;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.ListFragment;
 import android.content.Context;
@@ -43,18 +47,19 @@ public class FragmentOutput extends ListFragment {
 				Environment.DIRECTORY_MOVIES), "/ffmpeg/");
 		File[] filesArray = dir.listFiles();
 		ArrayList<String> filesList = new ArrayList<String>(); // holds file names
-		ArrayList<Bitmap> bitmapsList = new ArrayList<Bitmap>(); // holds thumbnails
+		ArrayList<String> dateList = new ArrayList<String>(); // holds dates
+		ArrayList<String> sizeList = new ArrayList<String>(); // holds size
 		for (File file : filesArray) {
 			String path = file.getName();
 			fileRoot = file.getParent();
 			filesList.add(path);
-			bitmapsList.add(getThumbnail(file));
+			dateList.add(getDate(file));
+			sizeList.add(getSize(file));
 		}
 		// adpater for listview, will contain paths of files
-		adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, filesList);
+		adapter = new OutputAdapter<String>(getActivity(), filesList, sizeList, dateList, R.layout.listfragment_output);
 		//setListAdapter(adapter);
-		setListAdapter(new OutputAdapter<String>(getActivity(), filesList, bitmapsList, R.layout.listfragment_output));
+		setListAdapter(adapter);
 		
 		//registerForContextMenu(getListView()); //link listview to context menu
 		
@@ -166,7 +171,25 @@ public class FragmentOutput extends ListFragment {
 			file.delete();
 	}
 	
-	private Bitmap getThumbnail(File file) {
-		return ThumbnailUtils.createVideoThumbnail(file.getPath(), MediaStore.Images.Thumbnails.MICRO_KIND);
+	private String getSize(File file) {
+		//size
+		Double value = file.length()/1024.0/1024.0; // convert B to MB
+		DecimalFormat df=new DecimalFormat("0.00");
+		String formate = df.format(value); 
+		double finalValue = 0;
+		try {
+			finalValue = (Double)df.parse(formate) ;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return String.valueOf(finalValue) + " MB";
 	}
+	
+	private String getDate(File file) {
+		Date lastModDate = new Date(file.lastModified());
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		return String.valueOf(formatter.format(lastModDate));
+	}
+	
 }
