@@ -39,7 +39,8 @@ public class VideoHandler {
 		
 		final Clip clip_out = new Clip(final_out_path);
 		// put flags in clip_out
-		clip_out.videoFps = fps;
+		if(!fps.equals(""))
+			clip_out.videoFps = fps;
 		int width_int = stringToInt(width);
 		if(width_int != -1)
 			clip_out.width = width_int;

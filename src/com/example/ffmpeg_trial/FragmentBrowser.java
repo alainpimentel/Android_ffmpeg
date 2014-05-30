@@ -234,9 +234,9 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			// change color of signal to off
 			process_signal.setBackgroundColor(Color.parseColor(off_color));
 			process_signal.setText(mssg + "\n Choose a new video!");
-			// Hide Outputs
+			/*// Hide Outputs
 			rowIn.setVisibility(View.GONE);
-			rowOut.setVisibility(View.GONE);
+			rowOut.setVisibility(View.GONE);*/
 		}
 	}
 	

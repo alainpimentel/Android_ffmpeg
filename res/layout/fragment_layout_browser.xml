@@ -2,184 +2,194 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView1"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
 
-    <TableLayout
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        
+        <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="3dp" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+	        <TableRow
+	            android:id="@+id/tableRow1"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" >
+	
+	            <TextView
+	                android:id="@+id/input_select"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/input_select"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:fontFamily="sans-serif-light" />
+	
+	            <Button
+	                android:id="@+id/button_select_in"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="@string/select"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	        </TableRow>
+	
+	        <TableRow
+	            android:id="@+id/tableRow2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingTop="10dp" >
+	
+	            <TextView
+	                android:id="@+id/input"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/input"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:fontFamily="sans-serif-light" />
+	
+	            <TextView
+	                android:id="@+id/input_res"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text=""
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	        </TableRow>
+	
+	        <TableRow
+	            android:id="@+id/tableRow3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingTop="10dp" >
+	
+	            <TextView
+	                android:id="@+id/output"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/output"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:fontFamily="sans-serif-light" />
+	
+	            <TextView
+	                android:id="@+id/output_res"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text=""
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	        </TableRow>
+	
+	        <TableRow
+	            android:id="@+id/tableRow4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingTop="5dp" >
+	
+	            <TextView
+	                android:id="@+id/fps"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/fps"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:fontFamily="sans-serif-light" />
+	
+	            <EditText
+	                android:id="@+id/fps_res"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:ems="10"
+	                android:inputType="numberDecimal"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	        </TableRow>
+	
+	        <TableRow
+	            android:id="@+id/tableRow5"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+	
+	            <TextView
+	                android:id="@+id/width"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/width"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:fontFamily="sans-serif-light" />
+	
+	            <EditText
+	                android:id="@+id/width_res"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:ems="10"
+	                android:inputType="number"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	        </TableRow>
+	
+	        <TableRow
+	            android:id="@+id/tableRow6"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+	
+	            <TextView
+	                android:id="@+id/height"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/height"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:fontFamily="sans-serif-light" />
+	
+	            <EditText
+	                android:id="@+id/height_res"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:ems="10"
+	                android:inputType="number"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	        </TableRow>
+	
+	        <TableRow
+	            android:id="@+id/tableRow7"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" >
+	
+	            <Button
+	                android:id="@+id/button_reset"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/reset"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	            <Button
+	                android:id="@+id/button_service"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:text="@string/start"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:fontFamily="sans-serif" />
+	        </TableRow>
 
-            <TextView
-                android:id="@+id/input_select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/input_select"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif-light" />
-
-            <Button
-                android:id="@+id/button_select_in"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/select"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp" >
-
-            <TextView
-                android:id="@+id/input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/input"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif-light" />
-
-            <TextView
-                android:id="@+id/input_res"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp" >
-
-            <TextView
-                android:id="@+id/output"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/output"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif-light" />
-
-            <TextView
-                android:id="@+id/output_res"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp" >
-
-            <TextView
-                android:id="@+id/fps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fps"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif-light" />
-
-            <EditText
-                android:id="@+id/fps_res"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/width"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/width"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif-light" />
-
-            <EditText
-                android:id="@+id/width_res"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/height"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/height"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif-light" />
-
-            <EditText
-                android:id="@+id/height_res"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow7"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/button_reset"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/reset"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Button
-                android:id="@+id/button_service"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/start"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:fontFamily="sans-serif" />
-        </TableRow>
-
+  		</TableLayout>
+    
         <TextView
             android:id="@+id/process_signal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:fontFamily="sans-serif-light" />
-
-    </TableLayout>
+            android:layout_marginLeft="3dp" 
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp" />
+        
+    </LinearLayout>
 
 </ScrollView>
