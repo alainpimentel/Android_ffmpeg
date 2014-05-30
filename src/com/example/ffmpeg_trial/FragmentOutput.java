@@ -8,9 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,17 +42,19 @@ public class FragmentOutput extends ListFragment {
 		File dir = new File(Environment.getExternalStoragePublicDirectory(
 				Environment.DIRECTORY_MOVIES), "/ffmpeg/");
 		File[] filesArray = dir.listFiles();
-		ArrayList<String> filesList = new ArrayList<String>();
+		ArrayList<String> filesList = new ArrayList<String>(); // holds file names
+		ArrayList<Bitmap> bitmapsList = new ArrayList<Bitmap>(); // holds thumbnails
 		for (File file : filesArray) {
 			String path = file.getName();
 			fileRoot = file.getParent();
 			filesList.add(path);
+			bitmapsList.add(getThumbnail(file));
 		}
 		// adpater for listview, will contain paths of files
 		adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, filesList);
 		//setListAdapter(adapter);
-		setListAdapter(new OutputAdapter<String>(getActivity(), filesList));
+		setListAdapter(new OutputAdapter<String>(getActivity(), filesList, bitmapsList, R.layout.listfragment_output));
 		
 		//registerForContextMenu(getListView()); //link listview to context menu
 		
@@ -159,5 +164,9 @@ public class FragmentOutput extends ListFragment {
 		File file = new File(path);
 		if(file.exists()) 
 			file.delete();
+	}
+	
+	private Bitmap getThumbnail(File file) {
+		return ThumbnailUtils.createVideoThumbnail(file.getPath(), MediaStore.Images.Thumbnails.MICRO_KIND);
 	}
 }
