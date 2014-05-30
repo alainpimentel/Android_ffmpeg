@@ -8,14 +8,10 @@ import java.util.Calendar;
 
 import org.ffmpeg.android.Clip;
 import org.ffmpeg.android.FfmpegController;
-import org.ffmpeg.android.R;
 import org.ffmpeg.android.ShellUtils;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class VideoHandler {
@@ -23,7 +19,7 @@ public class VideoHandler {
 	private static String mssg = "result: FAIL";
 	private static String final_out_path = "";
 	
-	public static String videoConverter(final Context c, File fileTmp, File fileAppRoot, final String in_path, final String out_path,
+	public static String videoConverter(final Context cntx, File fileTmp, File fileAppRoot, final String in_path, final String out_path,
 					String fps, String width, String height) {
 		
 //		Activity activity = (Activity) context;
@@ -97,7 +93,7 @@ public class VideoHandler {
 			e.printStackTrace();
 			//Toast.makeText(context, "result: FAIL", Toast.LENGTH_LONG).show();
 		}
-		
+		MyNotification.sendNotification(cntx, mssg);
 		return mssg;
 	}
 	

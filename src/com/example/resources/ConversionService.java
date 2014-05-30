@@ -32,11 +32,6 @@ public class ConversionService extends IntentService {
 	// will be called asynchronously by Android
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		// final String in_path
-		// final String out_path
-		// String fps
-		// String width
-		// String height
 		Bundle extras = intent.getExtras();
 		String fps = extras.getString("FPS");
 		String width = extras.getString("WIDTH");

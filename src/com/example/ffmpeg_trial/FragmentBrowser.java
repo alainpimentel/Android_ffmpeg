@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.resources.ConversionService;
 import com.example.resources.MediaHelper;
+import com.example.resources.MyNotification;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 
 public class FragmentBrowser extends Fragment implements OnClickListener {
@@ -68,8 +69,8 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					
 					resetInputs();
 				}
-				// Send Notification
-				sendNotification(mssg);
+				// Send Notification. ALREADY sent in service
+				//MyNotification.sendNotification(getActivity(), mssg);
 	      }
 	    }
 	  };
@@ -157,7 +158,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 						getActivity().startService(mServiceIntent);
 						
 						// Send Notification
-						sendNotification("Conversion is in progress");
+						MyNotification.sendNotification(getActivity(), "Conversion is in progress");
 						
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -228,7 +229,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		}
 	}
 	
-	private void sendNotification(String mssg) {
+	/*private void sendNotification(String mssg) {
 		// generate notification: http://developer.android.com/training/notify-user/build-notification.html#click
 		final int MY_NOTIFICATION_ID = 1; 
 		String notificationText = mssg;
@@ -254,7 +255,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		NotificationManager notificationManager = 
 		        (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(MY_NOTIFICATION_ID, myNotification.build());
-	}
+	}*/
 	
 	private void resetInputs() {
 		// set inputs to blank
