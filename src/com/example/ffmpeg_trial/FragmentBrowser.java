@@ -13,6 +13,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,7 +32,7 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
 public class FragmentBrowser extends Fragment implements OnClickListener {
 
 	private static final int REQUEST_CHOOSER = 1234;
-	Button browse_button, button_service, button_reset;
+	Button browse_button;
 	TextView input_res, output_res, fps_res,
 			width_res, height_res, process_signal;
 	TableRow rowIn, rowOut;
@@ -79,15 +82,24 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	public FragmentBrowser() {
 
 	}
-
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+	    // TODO Auto-generated method stub
+	    super.onCreate(savedInstanceState);
+	    setHasOptionsMenu(true);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.fragment_layout_browser, container, false);
-
+		
+		//buttons
 		browse_button = (Button) view.findViewById(R.id.button_select_in);
 		browse_button.setOnClickListener(this);
+		//textviews
 		input_res = (TextView) view.findViewById(R.id.input_res);
 		output_res = (TextView) view.findViewById(R.id.output_res);
 		fps_res = (TextView) view.findViewById(R.id.fps_res);
@@ -96,10 +108,7 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		process_signal = (TextView) view.findViewById(R.id.process_signal);
 		process_signal.setBackgroundColor(Color.parseColor(off_color));
 		process_signal.setText("Choose a video to convert");
-		button_service = (Button) view.findViewById(R.id.button_service);
-		button_service.setOnClickListener(this);
-		button_reset = (Button) view.findViewById(R.id.button_reset);
-		button_reset.setOnClickListener(this);
+		//rows
 		rowIn = (TableRow) view.findViewById(R.id.tableRow2);
 		rowOut = (TableRow) view.findViewById(R.id.tableRow3);
 		// Hide in and out initially
@@ -143,46 +152,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 					Toast.makeText(getActivity(), "External Storage not accessible", Toast.LENGTH_LONG).show();
 				}
            break;
-           case R.id.button_service:
-				if (in_path.equals("") || out_path.equals(""))
-					Toast.makeText(getActivity(), "Please choose input file", Toast.LENGTH_LONG).show();
-				else {
-					String fps = fps_res.getText().toString();
-					String width = width_res.getText().toString();
-					String height = height_res.getText().toString();
-					try {
-						Intent mServiceIntent = new Intent(getActivity(),
-								ConversionService.class);
-						Bundle extras = new Bundle();
-						extras.putString("WIDTH", width);
-						extras.putString("HEIGHT", height);
-						extras.putString("IN_PATH", in_path);
-						extras.putString("OUT_PATH", out_path);
-						extras.putString("FPS", fps);
-						mServiceIntent.putExtras(extras);
-						// Starts the IntentService
-						getActivity().startService(mServiceIntent);
-						
-						// Send Notification
-						MyNotification.sendNotification(getActivity(), "Conversion is in progress");
-						
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					// change color of signal to on
-					process_signal.setBackgroundColor(Color.parseColor(on_color));
-					process_signal.setText(proccessing);
-					sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", Context.MODE_PRIVATE);
-					Editor editor = sharedpreferences.edit();
-					editor.putString("mssg", proccessing);
-					editor.commit();
-					//resetInputs();
-				}
-			break;
-            case R.id.button_reset:
-				resetInputs();
-			break;
 		}
 	}
 	
@@ -196,7 +165,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	                
 	                // Get the File path from the Uri
 	                in_path = FileUtils.getPath(getActivity(), uri);
-	                //Toast.makeText(getActivity(), in_path, Toast.LENGTH_LONG).show();
 	                
 	                input_res.setText(in_path);
 	                
@@ -216,6 +184,62 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	    }	
 	}
 	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// action bar
+		inflater.inflate(R.menu.fragment_conversion_actions, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// handle item selection of action bar
+		switch (item.getItemId()) {
+		case R.id.action_refresh:
+			resetInputs();
+			return true;
+		case R.id.action_start:
+			if (in_path.equals("") || out_path.equals(""))
+				Toast.makeText(getActivity(), "Please choose input file", Toast.LENGTH_LONG).show();
+			else {
+				String fps = fps_res.getText().toString();
+				String width = width_res.getText().toString();
+				String height = height_res.getText().toString();
+				try {
+					Intent mServiceIntent = new Intent(getActivity(), ConversionService.class);
+					Bundle extras = new Bundle();
+					extras.putString("WIDTH", width);
+					extras.putString("HEIGHT", height);
+					extras.putString("IN_PATH", in_path);
+					extras.putString("OUT_PATH", out_path);
+					extras.putString("FPS", fps);
+					mServiceIntent.putExtras(extras);
+					// Starts the IntentService
+					getActivity().startService(mServiceIntent);
+
+					// Send Notification
+					MyNotification.sendNotification(getActivity(),
+							"Conversion is in progress");
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// change color of signal to on
+				process_signal.setBackgroundColor(Color.parseColor(on_color));
+				process_signal.setText(proccessing);
+				sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", Context.MODE_PRIVATE);
+				Editor editor = sharedpreferences.edit();
+				editor.putString("mssg", proccessing);
+				editor.commit();
+				// resetInputs();
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	
 	// Update views when returning to fragment, using the last message stored in SharedPreferenes
 	private void updateViews(String mssg) {
 		// ERRORS
@@ -234,9 +258,6 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 			// change color of signal to off
 			process_signal.setBackgroundColor(Color.parseColor(off_color));
 			process_signal.setText(mssg + "\n Choose a new video!");
-			/*// Hide Outputs
-			rowIn.setVisibility(View.GONE);
-			rowOut.setVisibility(View.GONE);*/
 		}
 	}
 	
