@@ -2,6 +2,8 @@ package com.example.ffmpeg_trial;
 
 import java.io.File;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -122,13 +124,16 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		super.onResume();
 		getActivity().registerReceiver(receiver, new IntentFilter(
 				ConversionService.NOTIFICATION));
-		sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", 
-				Context.MODE_PRIVATE);
-		if (sharedpreferences.contains("mssg"))
-	      {
-			ret_mssg = sharedpreferences.getString("mssg", "");
-			updateViews(ret_mssg);
-	      }
+		if (isMyServiceRunning()) {
+			updateViews(proccessing);
+		} else {
+			sharedpreferences = getActivity().getSharedPreferences(
+					"com.example.ffmpeg_trial", Context.MODE_PRIVATE);
+			if (sharedpreferences.contains("mssg")) {
+				ret_mssg = sharedpreferences.getString("mssg", "");
+				updateViews(ret_mssg);
+			}
+		}
 	}
 
 	@Override
@@ -227,10 +232,10 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 				// change color of signal to on
 				process_signal.setBackgroundColor(Color.parseColor(on_color));
 				process_signal.setText(proccessing);
-				sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", Context.MODE_PRIVATE);
+				/*sharedpreferences = getActivity().getSharedPreferences("com.example.ffmpeg_trial", Context.MODE_PRIVATE);
 				Editor editor = sharedpreferences.edit();
 				editor.putString("mssg", proccessing);
-				editor.commit();
+				editor.commit();*/
 				// resetInputs();
 			}
 			return true;
@@ -275,4 +280,14 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 		rowOut.setVisibility(View.GONE);
 	}
 
+	private boolean isMyServiceRunning() {
+		//http://stackoverflow.com/questions/7440473/android-how-to-check-if-the-intent-service-is-still-running-or-has-stopped-runni
+	    ActivityManager manager = (ActivityManager) getActivity().getSystemService(getActivity().ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if ("com.example.Resources.ConversionService".equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 }
