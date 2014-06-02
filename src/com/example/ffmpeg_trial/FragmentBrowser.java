@@ -281,10 +281,11 @@ public class FragmentBrowser extends Fragment implements OnClickListener {
 	}
 
 	private boolean isMyServiceRunning() {
+		getActivity();
 		//http://stackoverflow.com/questions/7440473/android-how-to-check-if-the-intent-service-is-still-running-or-has-stopped-runni
-	    ActivityManager manager = (ActivityManager) getActivity().getSystemService(getActivity().ACTIVITY_SERVICE);
+	    ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
 	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-	        if ("com.example.Resources.ConversionService".equals(service.service.getClassName())) {
+	        if ("com.example.resources.ConversionService".equals(service.service.getClassName())) {
 	            return true;
 	        }
 	    }
