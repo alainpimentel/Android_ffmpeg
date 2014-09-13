@@ -25,11 +25,6 @@ public static Intent createGetContentIntent() {
 ```
 .
 
-![](http://imgur.com/PuS5wtc)
-![](https://github.com/hpimentel/Android_ffmpeg/github/Navigation.png)
-![](https://github.com/hpimentel/Android_ffmpeg/github/Output.png)
-
-
 ### Programming ###
 
 * Tutorial for Navigation Drawer Menu: [link](http://www.tutecentral.com/android-custom-navigation-drawer/)
