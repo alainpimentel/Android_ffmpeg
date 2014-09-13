@@ -25,6 +25,17 @@ public static Intent createGetContentIntent() {
 ```
 .
 
+![](https://github.com/hpimentel/Android_ffmpeg/github/Home.png)
+![](https://github.com/hpimentel/Android_ffmpeg/github/Navigation.png)
+![](https://github.com/hpimentel/Android_ffmpeg/github/Output.png)
+
+
 ### Programming ###
 
 * Tutorial for Navigation Drawer Menu: [link](http://www.tutecentral.com/android-custom-navigation-drawer/)
+
+### TODO ###
+
+* Show a progress bar when videos are being converted, problably undeterministic
+* Have a history of the videos converted, maybe even a log for errors
+* Fix videos orientation bug
