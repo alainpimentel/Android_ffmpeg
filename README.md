@@ -25,7 +25,7 @@ public static Intent createGetContentIntent() {
 ```
 .
 
-![](https://github.com/hpimentel/Android_ffmpeg/github/Home.png)
+![](http://imgur.com/PuS5wtc)
 ![](https://github.com/hpimentel/Android_ffmpeg/github/Navigation.png)
 ![](https://github.com/hpimentel/Android_ffmpeg/github/Output.png)
 
